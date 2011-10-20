@@ -1,0 +1,150 @@
+                                   tspell
+                                  ========
+
+  tspell is library which implements trie-base approximate string
+  search facility and a tool which utilizes it to check spelling of
+  arbitrary set of text data.
+
+Installation
+=============
+
+  Depends:
+    * cmake
+    * libicu
+
+  Building:
+
+    cmake && make
+
+  Running tests (after build):
+
+    ctest -V
+
+  Installation (after build):
+
+    make install
+
+Library
+=======
+
+  Synopsis
+  --------
+
+    #include <tspell/stringtrie.hh>
+
+    TSpell::StringTrie trie;
+
+    trie.Insert("spelling");
+
+    std::set<std::string> results;
+    trie.FindApprox("speling", 1, results);
+
+    assert(results.size() == 1);
+    assert(*results.begin() == "spelling");
+
+  Description
+  -----------
+
+  The library provides a class which implements trie (1) data
+  structure which is first filled with dictionary words and then
+  may be used for approximate string search with given Levenshtein
+  distance (2) (which is basically number of changes needed to turn
+  one word into another, where possible changes are removal, addition
+  or a change of arbitrary letter).
+
+  For example, if you first fill tree with words "green" and "yellow"
+  and "red", you may then match "breen", "yelow" and "gred" with
+  distance 1.
+
+  [1] http://en.wikipedia.org/wiki/Levenshtein_distance
+  [2] http://en.wikipedia.org/wiki/Trie
+
+  Usage details
+  -------------
+
+  The library is header-only and doesn't really have any dependencies.
+  Currently, it only features template trie class with approximate
+  string search functionality, which may be adapted to arbitrary
+  character and string types. The triebase.hh is mandatory, other
+  headers provide wrappers for some string types
+
+   * stringtrie.hh for C++ strings (char/std::string, wchar_t/std::wstring)
+   * triebase.hh for ICU strings (UChar/UnicodeString)
+
+  other wrappers may be easily written for e.g. Qt strings, C++11
+  u32strings etc.
+
+Utility
+=======
+
+  The utility is simplest possible application of tspell library.
+  It processes arbitrary text data, splits it into words, counts
+  how many times each word is encountered in the text. Rare words
+  which have approximate matches among common words are considered
+  to be potentially spelling errors and are dumped on the standard
+  output.
+
+  Usage
+  -----
+
+    tspell [options] file ...
+      -t  set max number of occurrences for misspelled words (default 1)
+      -c  set min number of occurrences for correct words (default 10)
+      -l  set minimal length of a word (default 3)
+      -w  specify an additional set of characters to be considered
+          a word letters (which are only alphabetic by default)
+      -d  specify maximal number of changes in a word (default 1)
+      -h  display this help
+
+  Example
+  -------
+
+  For demonstration, let's run this on FreeBSD kernel source tree.
+  I'll change minimal word length to avoid most false positives.
+
+  % tspell -l 10 `find /usr/src/sys/ -name "*.[ch]*"`
+  "ACKNOWLEDGES"
+          1 occurrences:
+                  /usr/src/sys/dev/txp/3c990img.h:28 byte 9 char 9
+          1 possible corrections:
+                  ACKNOWLEDGE (22)
+  "ADMINREVOKE"
+          1 occurrences:
+                  /usr/src/sys/fs/nfsserver/nfs_nfsdport.c:3015 byte 32 char 32
+          1 possible corrections:
+                  ADMINREVOKED (20)
+  "Additionaly"
+          1 occurrences:
+                  /usr/src/sys/netinet6/in6.c:2213 byte 15 char 15
+          2 possible corrections:
+                  Additional (120)
+                  Additionally (67)
+  "Applicaption"
+          1 occurrences:
+                  /usr/src/sys/dev/usb/input/usb_rdesc.h:129 byte 51 char 51
+          1 possible corrections:
+                  Application (49)
+  "Architecure"
+          1 occurrences:
+                  /usr/src/sys/xen/interface/arch-x86/xen-mca.h:90 byte 18 char 18
+          1 possible corrections:
+                  Architecture (53)
+  ...
+
+  As you can see, there are 3 real errors in 5 first results, and
+  actually quite many in the whole output. Another bonus apart from
+  not requiring a dictionary is that the utility may be used on
+  arbitrary (including machine-readable) data, which may have
+  unnoticed spelling errors.
+
+License
+=======
+
+  This software is distributed under the GNU General Public License
+  version 3. Please read the COPYING file for more information.
+
+Credits
+=======
+
+  Author:
+    Dmitry Marakasov <amdmi3@amdmi3.ru>

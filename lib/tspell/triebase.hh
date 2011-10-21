@@ -61,7 +61,7 @@ private:
 	}
 
 	/* XXX: const */
-	bool FindExact(Node* start, const Char* string, size_t length) {
+	bool FindExact(Node* start, const Char* string, size_t length) const {
 		Node* current = start;
 
 		for (; current != NULL && current->ch != *string; current = current->next) {
@@ -78,7 +78,7 @@ private:
 		}
 	}
 
-	void FindApprox(Node* last, Node* current, const Char* string, size_t length, int distance, Appender& appender) {
+	void FindApprox(Node* last, Node* current, const Char* string, size_t length, int distance, Appender& appender) const {
 		/* remove character, we can do it regardless of position in a trie given we have distance */
 		if (length > 0 && distance > 0)
 			FindApprox(last, current, string + 1, length - 1, distance - 1, appender);
@@ -128,14 +128,14 @@ protected:
 			Insert(NULL, &root_, string, length);
 	}
 
-	bool FindExact(const Char* string, size_t length) {
+	bool FindExact(const Char* string, size_t length) const {
 		if (length == 0 || !root_)
 			return false;
 
 		return FindExact(root_, string, length);
 	}
 
-	void FindApprox(const Char* string, size_t length, int distance, Appender& appender) {
+	void FindApprox(const Char* string, size_t length, int distance, Appender& appender) const {
 		if (root_)
 			FindApprox(NULL, root_, string, length, distance, appender);
 	}

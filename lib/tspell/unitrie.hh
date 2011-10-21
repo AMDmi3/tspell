@@ -60,11 +60,11 @@ public:
 		Base::Insert(string.getBuffer(), string.length());
 	}
 
-	bool FindExact(const UnicodeString& string) {
+	bool FindExact(const UnicodeString& string) const {
 		return Base::FindExact(string.getBuffer(), string.length());
 	}
 
-	void FindApprox(const UnicodeString& string, int distance, std::set<UnicodeString>& out) {
+	void FindApprox(const UnicodeString& string, int distance, std::set<UnicodeString>& out) const {
 		UnicodeStringSetAppender a(out);
 		Base::FindApprox(string.getBuffer(), string.length(), distance, a);
 	}

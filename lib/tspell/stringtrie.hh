@@ -61,11 +61,11 @@ public:
 		Base::Insert(string.c_str(), string.length());
 	}
 
-	bool FindExact(const std::string& string) {
+	bool FindExact(const std::string& string) const {
 		return Base::FindExact(string.c_str(), string.length());
 	}
 
-	void FindApprox(const std::string& string, int distance, std::set<std::string>& out) {
+	void FindApprox(const std::string& string, int distance, std::set<std::string>& out) const {
 		StringSetAppender<char> a(out);
 		Base::FindApprox(string.c_str(), string.length(), distance, a);
 	}
@@ -80,11 +80,11 @@ public:
 		Base::Insert(string.c_str(), string.length());
 	}
 
-	bool FindExact(const std::wstring& string) {
+	bool FindExact(const std::wstring& string) const {
 		return Base::FindExact(string.c_str(), string.length());
 	}
 
-	void FindApprox(const std::wstring& string, int distance, std::set<std::wstring>& out) {
+	void FindApprox(const std::wstring& string, int distance, std::set<std::wstring>& out) const {
 		StringSetAppender<wchar_t> a(out);
 		Base::FindApprox(string.c_str(), string.length(), distance, a);
 	}

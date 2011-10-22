@@ -20,6 +20,8 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <locale.h>
+#include <string.h>
+#include <stdio.h>
 
 #include <iostream>
 #include <vector>

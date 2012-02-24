@@ -14,7 +14,7 @@ Installation
 
   Building:
 
-    cmake && make
+    cmake . && make
 
   Running tests (after build):
 

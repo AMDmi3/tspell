@@ -236,10 +236,10 @@ int usage(const char* progname, int code) {
     fprintf(stderr, "Usage: %s [options] file ...\n", progname);
     fprintf(stderr, "  -t  set max number of occurrences for misspelled words (default 1)\n");
     fprintf(stderr, "  -c  set min number of occurrences for correct words (default 10)\n");
-    fprintf(stderr, "  -l  set miniman length of a word (default 3)\n");
-    fprintf(stderr, "  -w  specify an additinal set of characters to be considered\n");
-    fprintf(stderr, "      a word letters (which are only alphabetic by default)\n");
-    fprintf(stderr, "  -d  specify maximal number of changes in a word (default 1)\n");
+    fprintf(stderr, "  -l  set minimum length of a word (default 3)\n");
+    fprintf(stderr, "  -w  specify an additional set of characters to be considered\n");
+    fprintf(stderr, "      as word letters (which are only alphabetic by default)\n");
+    fprintf(stderr, "  -d  specify maximum number of changes in a word (default 1)\n");
 
     fprintf(stderr, "  -h  display this help\n");
     return code;

@@ -22,6 +22,8 @@
 #include <locale.h>
 #include <string.h>
 #include <stdio.h>
+#include <getopt.h>
+#include <unistd.h>
 
 #include <iostream>
 #include <vector>
